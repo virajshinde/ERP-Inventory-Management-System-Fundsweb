@@ -1,0 +1,36 @@
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Product {
+  id          String   @id @default(uuid()) @db.Uuid
+  code        String   @unique @db.VarChar(30)
+  name        String   @db.VarChar(150)
+  category    String   @db.VarChar(100)
+  unit        String   @db.VarChar(20)
+  basePrice   Decimal  @db.Decimal(12, 2)
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  inventory   Inventory?
+}
+
+model Inventory {
+  id               String   @id @default(uuid()) @db.Uuid
+  productId        String   @unique @db.Uuid
+  physicalQuantity Int      @default(0)
+  reservedQuantity Int      @default(0)
+  updatedAt        DateTime @updatedAt
+
+  product Product @relation(fields: [productId], references: [id], onDelete: Restrict)
+
+  @@index([productId])
+  @@map("inventory")
+}
