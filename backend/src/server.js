@@ -7,6 +7,7 @@ const authRoutes = require('./routes/authRoutes');
 const customerRoutes = require('./routes/customerRoutes');
 const enquiryRoutes = require('./routes/enquiryRoutes');
 const quotationRoutes = require('./routes/quotationRoutes');
+const salesOrderRoutes = require('./routes/salesOrderRoutes');
 
 const app = express();
 
@@ -40,6 +41,7 @@ app.get('/api/auth/me', authenticate, (req, res) => {
 app.use('/api/customers', customerRoutes);
 app.use('/api/enquiries', enquiryRoutes);
 app.use('/api/quotations', quotationRoutes);
+app.use('/api/sales-orders', salesOrderRoutes);
 
 
 // 404 handler — keep this after your API routes.
