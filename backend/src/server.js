@@ -4,6 +4,7 @@ require('dotenv').config();
 const { authenticate } = require('./middleware/authMiddleware');
 
 const authRoutes = require('./routes/authRoutes');
+const customerRoutes = require('./routes/customerRoutes');
 
 const app = express();
 
@@ -26,12 +27,15 @@ app.get('/api/health', (req, res) => {
 // Authentication routes
 app.use('/api/auth', authRoutes);
 
+
 app.get('/api/auth/me', authenticate, (req, res) => {
   res.status(200).json({
     success: true,
     user: req.user,
   });
 });
+
+app.use('/api/customers', customerRoutes);
 
 // 404 handler — keep this after your API routes.
 
